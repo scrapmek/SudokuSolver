@@ -35,9 +35,11 @@ namespace SudokuSolver.Module
         {
             while (this.Data.Cells.Any(x => x.Value == null))
             {
-                solveColumns();
-                solveRows();
-                solveSegments();
+                refineColumns();
+                refineRows();
+                refineSegments();
+                refineExclusionaryRowPossibilities();
+                refineExclusionaryColumnPossibilities();
 
                 if (!this.changedPossibilities)
                     throw new Exception("No possibilities were changed in the cells, the solving algorithms cannot determine the next step to take. (Error 500: Puzzle too hard!)");
@@ -48,44 +50,102 @@ namespace SudokuSolver.Module
             }
         }
 
-        private void solveCellSet(IEnumerable<SudokuCell> bla)
+        private void refineCellSet(IEnumerable<SudokuCell> bla)
         {
-            for (int i = 0; i < 9; i++)
+            for (int i = 1; i <= 9; i++)
                 if (bla.Any(cell => cell.Value == i))
                     foreach (SudokuCell item in bla)
                     {
                         if (item.Value == null)
                         {
-                            var newPossibilities = item.Possibilities.Except(new List<int>() { i }).ToList();
-
-                            if (!newPossibilities.SequenceEqual(item.Possibilities))
-                            {
-                                this.Data.SetCellPossibilities(item.X, item.Y, newPossibilities);
-                                this.changedPossibilities = true;
-                            }
+                            removeCellPossibility(item, i);
                         }
                     }
         }
 
-        private void solveColumns()
+        private void refineColumns()
         {
             for (int i = 0; i < 9; i++)
-                solveCellSet(this.Data.GetColumn(i));
+                refineCellSet(this.Data.GetColumn(i));
         }
 
-        private void solveRows()
+        private void refineRows()
         {
             for (int i = 0; i < 9; i++)
-                solveCellSet(this.Data.GetRow(i));
+                refineCellSet(this.Data.GetRow(i));
         }
 
-        private void solveSegments()
+        private void refineSegments()
         {
             foreach (SegmentX x in Helpers.SegmentXList)
                 foreach (SegmentY y in Helpers.SegmentYList)
-                    solveCellSet(this.Data.GetSegment(x, y));
+                    refineCellSet(this.Data.GetSegment(x, y));
         }
 
+        private void refineExclusionaryRowPossibilities()
+        {
+            foreach (SegmentX x in Helpers.SegmentXList)
+                foreach (SegmentY y in Helpers.SegmentYList)
+                {
+                    var cells = this.Data.GetSegment(x, y);
+                    for (int i = 1; i <= 9; i++)
+                    {
+                        var perPossibility = cells.Where(cell => cell.Possibilities.Contains(i)).GroupBy(cell => cell.Y);
+
+                        if (perPossibility.Count() == 1)
+                        {
+                            removeSegmentPossibilitiesByRow(
+                                Helpers.SegmentXList.Where(seg => seg != x),
+                                perPossibility.First().First().Y,
+                                i);
+                        }
+                    }
+
+                }
+        }
+
+        private void removeSegmentPossibilitiesByRow(IEnumerable<SegmentX> segments, int y, int possibilityToRemove)
+        {
+            foreach (var item in this.Data.Cells.Where(x => segments.Contains(x.SegmentX) && x.Y == y))
+                this.removeCellPossibility(item, possibilityToRemove);
+        }
+
+        private void refineExclusionaryColumnPossibilities()
+        {
+            foreach (SegmentX x in Helpers.SegmentXList)
+                foreach (SegmentY y in Helpers.SegmentYList)
+                {
+                    var cells = this.Data.GetSegment(x, y);
+                    for (int i = 1; i <= 9; i++)
+                    {
+                        var perPossibility = cells.Where(cell => cell.Possibilities.Contains(i)).GroupBy(cell => cell.X);
+
+                        if (perPossibility.Count() == 1)
+                        {
+                            removeSegmentPossibilitiesByColumn(
+                                Helpers.SegmentYList.Where(seg => seg != y),
+                                perPossibility.First().First().X,
+                                i);
+                        }
+                    }
+
+                }
+        }
+
+        private void removeSegmentPossibilitiesByColumn(IEnumerable<SegmentY> segments, int x, int possibilityToRemove)
+        {
+            foreach (var item in this.Data.Cells.Where(cell => segments.Contains(cell.SegmentY) && cell.X == x))
+                this.removeCellPossibility(item, possibilityToRemove);
+        }
+
+        private void removeCellPossibility(SudokuCell cell, int possibility)
+        {
+            if (cell.Possibilities.Contains(possibility))
+            {
+                Data.RemoveCellPossibility(cell.X, cell.Y, possibility);
+                this.changedPossibilities = true;
+            }
+        }
         #endregion Methods
 
     }

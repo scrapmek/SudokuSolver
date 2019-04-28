@@ -37,7 +37,12 @@ namespace SudokuSolver.Module.Models
 
         public IEnumerable<SudokuCell> GetSegment(SegmentX x, SegmentY y) => this.Cells.Where(cell => cell.SegmentX == x && cell.SegmentY == y);
 
-        public void SetCellPossibilities(int x, int y, IEnumerable<int> possibilities) => this.Cells.Single(cell => cell.X == x && cell.Y == y).Possibilities = possibilities;
+        public void RemoveCellPossibility(int x, int y, int possibility)
+        {
+            var bla = this.Cells.Single(cell => cell.X == x && cell.Y == y);
+
+            bla.Possibilities = bla.Possibilities.Except(new int[] { possibility });
+        }
 
         public void SetAllKnownCellValues()
         {
