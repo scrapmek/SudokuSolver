@@ -1,4 +1,4 @@
-﻿namespace Module.Models
+﻿namespace SudokuSolver.Module.Models
 {
     public class SudokuCellData
     {

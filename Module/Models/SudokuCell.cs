@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Module.Enums;
+using SudokuSolver.Module.Enums;
 
-namespace Module.Models
+namespace SudokuSolver.Module.Models
 {
-
     public class SudokuCell
     {
-
         #region Properties
 
         public IEnumerable<int> Possibilities { get; set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };

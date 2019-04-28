@@ -1,4 +1,4 @@
-﻿namespace Module.Enums
+﻿namespace SudokuSolver.Module.Enums
 {
     public enum SegmentY
     {

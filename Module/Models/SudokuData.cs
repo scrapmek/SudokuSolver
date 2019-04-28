@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Module.Enums;
+using SudokuSolver.Module.Enums;
 
-namespace Module.Models
+namespace SudokuSolver.Module.Models
 {
     public class SudokuData
     {

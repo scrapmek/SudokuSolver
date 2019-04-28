@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SudokuSolver.Module;
+using SudokuSolver.Module.Models;
 
-namespace UnitTests
+namespace SudokuSolver.UnitTests
 {
     [TestClass]
     public class SolverTestsS
@@ -12,8 +14,8 @@ namespace UnitTests
         [TestMethod]
         public void Solver()
         {
-            List<Module.Models.SudokuCellData> cellData =
-                new List<Module.Models.SudokuCellData>()
+            List<SudokuCellData> cellData =
+                new List<SudokuCellData>()
                 {
                     new Module.Models.SudokuCellData()
                     {
@@ -227,7 +229,7 @@ namespace UnitTests
                     }
                 };
 
-            Module.Solver solver = new Module.Solver(cellData);
+            Solver solver = new Solver(cellData);
 
             solver.Solve();
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Module.Enums;
-using Module.Models;
+using SudokuSolver.Module.Enums;
+using SudokuSolver.Module.Models;
 
-namespace Module
+namespace SudokuSolver.Module
 {
     public class Solver
     {

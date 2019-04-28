@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Module.Enums;
+using SudokuSolver.Module.Enums;
 
-namespace Module
+namespace SudokuSolver.Module
 {
     public class Helpers
     {

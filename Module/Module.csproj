@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SudokuSolver.Module</AssemblyName>
+    <RootNamespace>SudokuSolver.Module</RootNamespace>
   </PropertyGroup>
 
 </Project>
