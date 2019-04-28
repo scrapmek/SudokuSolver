@@ -30,6 +30,8 @@ namespace SudokuSolver.Module.Models
             this.X = sudokuCellData.X;
             this.Y = sudokuCellData.Y;
             this.Value = sudokuCellData.Value;
+            if (sudokuCellData.Value != null)
+                Possibilities = new List<int>() { sudokuCellData.Value.Value };
         }
 
         #endregion Constructors
