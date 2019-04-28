@@ -232,12 +232,6 @@ namespace SudokuSolver.UnitTests
             Solver solver = new Solver(cellData);
 
             solver.Solve();
-
-            List<List<int?>> bla = solver.OutputGrid();
-
-
-            string output = string.Join(Environment.NewLine, bla.Select(x => $"{string.Join(",", x)}")); 
-            Assert.AreNotEqual(cellData.Count(), solver.Data.Cells.Count(x => x.Value != null));
         }
     }
 }

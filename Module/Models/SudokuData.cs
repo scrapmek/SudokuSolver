@@ -46,7 +46,7 @@ namespace SudokuSolver.Module.Models
 
         public void SetAllKnownCellValues()
         {
-            foreach (var item in this.Cells.Where(x => x.Possibilities.Count() == 1))
+            foreach (var item in this.Cells.Where(x => x.Value == null && x.Possibilities.Count() == 1))
                 item.SetCellValue();
         }
 

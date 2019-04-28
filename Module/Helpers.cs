@@ -7,7 +7,8 @@ namespace SudokuSolver.Module
     public class Helpers
     {
         #region Properties
-
+        public static IEnumerable<int> PossibleNumbers { get; } = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public static IEnumerable<int> Coordinates { get; } = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
         public static IEnumerable<SegmentX> SegmentXList { get; } = new List<SegmentX> { SegmentX.Left, SegmentX.Center, SegmentX.Right };
         public static IEnumerable<SegmentY> SegmentYList { get; } = new List<SegmentY> { SegmentY.Bottom, SegmentY.Middle, SegmentY.Top };
 

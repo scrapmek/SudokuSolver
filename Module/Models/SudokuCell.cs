@@ -9,7 +9,7 @@ namespace SudokuSolver.Module.Models
     {
         #region Properties
 
-        public IEnumerable<int> Possibilities { get; set; } = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public IEnumerable<int> Possibilities { get; set; } = Helpers.PossibleNumbers;
 
         public SegmentX SegmentX => Helpers.GetSegmentX(this.X);
 
@@ -31,7 +31,7 @@ namespace SudokuSolver.Module.Models
             this.Y = sudokuCellData.Y;
             this.Value = sudokuCellData.Value;
             if (sudokuCellData.Value != null)
-                Possibilities = new List<int>() { sudokuCellData.Value.Value };
+                this.Possibilities = null;;
         }
 
         #endregion Constructors
@@ -41,7 +41,10 @@ namespace SudokuSolver.Module.Models
         public void SetCellValue()
         {
             if (this.Possibilities.Count() == 1)
+            {
                 this.Value = this.Possibilities.Single();
+                this.Possibilities = null;
+            }
             else
                 throw new InvalidOperationException("It is not yet certain what the value of this cell should be.");
         }
