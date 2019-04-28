@@ -40,7 +40,7 @@ namespace SudokuSolver.Module
                 solveSegments();
 
                 if (!this.changedPossibilities)
-                    break; //throw new Exception("No possibilities were changed in the cells, the solving algorithms cannot determine the next step to take.");
+                    throw new Exception("No possibilities were changed in the cells, the solving algorithms cannot determine the next step to take. (Error 500: Puzzle too hard!)");
                 else
                     this.Data.SetAllKnownCellValues();
 
