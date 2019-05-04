@@ -14,7 +14,7 @@ namespace SudokuSolver.API.Controllers
     {
         // POST api/values
         [HttpPost]
-        public ActionResult<List<List<int?>>> Post([FromBody] IEnumerable<SudokuCellData> value)
+        public ActionResult<List<List<int?>>> Post([FromBody] IEnumerable<IEnumerable<int?>> value)
         {
             Solver solver = new Solver(value);
 

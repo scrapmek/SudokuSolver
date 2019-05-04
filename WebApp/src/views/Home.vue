@@ -1,18 +1,25 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div>
+        <SudokuGrid get="input/data" set="input/set" class="sudokuGrid" />
+        <Arrow/>
+        <SudokuGrid get="output/data" set="output/set" class="sudokuGrid"/>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import SudokuGrid from '@/components/Sudoku/SudokuGrid'
+import Arrow from '@/components/Arrow.vue'
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
+    components:{
+        SudokuGrid,
+        Arrow
+    }
 }
 </script>
+
+<style scoped>
+.sudokuGrid{
+float: left;
+}
+</style>

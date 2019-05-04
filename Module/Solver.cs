@@ -25,11 +25,31 @@ namespace SudokuSolver.Module
 
         public Solver(IEnumerable<SudokuCellData> input) => this.Data = new SudokuData(input ?? throw new ArgumentNullException(nameof(input)));
 
+        public Solver(IEnumerable<IEnumerable<int?>> input)
+        {
+            var data = new List<SudokuCellData>();
+
+            for (int y = 0; y < input.Count(); y++)
+                for (int x = 0; x < input.ToArray()[y].Count(); x++)
+                    data.Add(
+                        new SudokuCellData()
+                        {
+                            Y = y,
+                            X = x,
+                            Value = input.ToArray()[y].ToArray()[x]
+                        });
+
+            this.Data = 
+                new SudokuData(
+                    data ?? 
+                    throw new ArgumentNullException(nameof(input)));
+        }
+
         #endregion Constructors
 
         #region Methods
 
-        public List<List<int?>> OutputGrid() => this.Data.Cells.GroupBy(cell => cell.Y).OrderByDescending(x => x.Key).Select(group => group.OrderBy(cell => cell.X).Select(cell => cell.Value).ToList()).ToList();
+        public List<List<int?>> OutputGrid() => this.Data.Cells.GroupBy(cell => cell.Y).OrderBy(x => x.Key).Select(group => group.OrderBy(cell => cell.X).Select(cell => cell.Value).ToList()).ToList();
 
         public void Solve()
         {
